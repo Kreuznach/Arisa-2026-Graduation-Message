@@ -1,0 +1,388 @@
+/* =========================================================
+   ARISA · LAST LIVE — 편지 작성 화면 (letters.css)
+   화면 구조·편지지·버튼 배치는 기존 편지 작성 화면 그대로, 색만 아리사 핑크입니다.
+   공통 색·배경·이모지는 arisa-theme.css 에 있습니다.
+   ========================================================= */
+
+/* ---------- 페이지 뼈대 ---------- */
+.page {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: max(12px, env(safe-area-inset-top)) 16px max(20px, env(safe-area-inset-bottom));
+}
+
+.top-bar {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.lang-switch {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.content {
+  flex: 1 0 auto;
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 14px 0 6px;
+}
+
+/* ---------- 제목 카드 ---------- */
+.card--hero {
+  padding-top: 24px;
+  padding-bottom: 24px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.card--hero::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  width: 240px;
+  height: 120px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, rgba(255, 207, 226, 0.7), rgba(255, 207, 226, 0) 70%);
+  pointer-events: none;
+}
+
+.hero-title {
+  position: relative;
+  margin-top: 12px;
+  font-size: clamp(1.55rem, 7vw, 2.05rem);
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.hero-subtitle {
+  position: relative;
+  margin-top: 10px;
+  color: var(--arisa-rose);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.hero-lead {
+  position: relative;
+  margin-top: 4px;
+  color: var(--arisa-text-sub);
+  font-size: 0.9rem;
+}
+
+/* ---------- 핑크 봉투 + 로즈 하트 봉인 ---------- */
+.mini-envelope {
+  position: relative;
+  width: 84px;
+  aspect-ratio: 3 / 2;
+  margin: 0 auto;
+  animation: envelope-float 6s ease-in-out infinite alternate;
+}
+
+.mini-envelope > span {
+  position: absolute;
+}
+
+.mini-envelope__back {
+  inset: 0;
+  border-radius: 9px;
+  background: linear-gradient(180deg, #F8E0EA, #EFC6D8);
+  box-shadow: 0 6px 16px rgba(145, 55, 94, 0.18);
+}
+
+.mini-envelope__front {
+  inset: 0;
+  border-radius: 9px;
+  background: linear-gradient(160deg, #FDEFF4, #F6D8E5);
+  clip-path: polygon(0 0, 50% 56%, 100% 0, 100% 100%, 0 100%);
+}
+
+.mini-envelope__flap {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60%;
+  border-radius: 9px 9px 0 0;
+  background: linear-gradient(180deg, #F2CBDC, #E9B7CD);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.mini-envelope__seal {
+  top: 60%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--arisa-rose);
+  color: #fff;
+  font-size: 0.72rem;
+  line-height: 1;
+  box-shadow: 0 3px 8px rgba(173, 62, 108, 0.42);
+}
+
+.mini-envelope--sent {
+  width: 96px;
+}
+
+@keyframes envelope-float {
+  from { transform: translateY(2px); }
+  to { transform: translateY(-4px); }
+}
+
+/* ---------- 편지 카드 ---------- */
+.card--letter {
+  padding: 24px 20px 22px;
+}
+
+.letter-to {
+  color: var(--arisa-rose);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+}
+
+.letter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 14px;
+}
+
+.field-optional {
+  color: var(--arisa-text-sub);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.field-count,
+.field-meta {
+  color: var(--arisa-text-sub);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.field-meta {
+  text-align: right;
+}
+
+.field-count.is-over,
+.field-meta.is-over {
+  color: var(--arisa-danger);
+  font-weight: 700;
+}
+
+.form-status {
+  color: var(--arisa-text-sub);
+  font-size: 0.84rem;
+  text-align: center;
+}
+
+/* 편지지: 따뜻한 아이보리 위에 옅은 가로줄이 글자 행간(30px)과 맞고, 스크롤하면 줄도 함께 움직임 */
+.paper {
+  position: relative;
+}
+
+.paper-input {
+  display: block;
+  width: 100%;
+  min-height: calc(var(--paper-line) * 8 + var(--paper-pad-y) * 2);
+  max-height: 62vh;
+  padding: var(--paper-pad-y) 18px;
+  border: 1px solid var(--arisa-line);
+  border-radius: var(--radius-md);
+  background-color: var(--arisa-paper);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(var(--paper-line) - 1px),
+    var(--arisa-paper-line) calc(var(--paper-line) - 1px),
+    var(--arisa-paper-line) var(--paper-line)
+  );
+  background-attachment: local;
+  background-position: 0 var(--paper-pad-y);
+  background-size: 100% var(--paper-line);
+  font-size: 16px;
+  line-height: var(--paper-line);
+  resize: vertical;
+  overflow-y: auto;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  box-shadow: inset 0 1px 3px rgba(145, 55, 94, 0.06);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-notes {
+  display: grid;
+  gap: 4px;
+  padding: 12px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.62);
+  color: var(--arisa-text-sub);
+  font-size: 0.84rem;
+  list-style: none;
+}
+
+.form-notes li::before,
+.guide-list li::before {
+  content: "·";
+  content: "·" / "";
+  margin-right: 6px;
+  color: var(--arisa-pink);
+  font-weight: 800;
+}
+
+/* ---------- 결과 화면 (보냄 / 제한 중) ---------- */
+.result-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  padding: 18px 8px 6px;
+  text-align: center;
+}
+
+.result-title {
+  margin-top: 10px;
+  font-size: clamp(1.2rem, 5.4vw, 1.4rem);
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.result-title:focus {
+  outline: none;
+}
+
+.result-title:focus-visible {
+  outline: 3px solid var(--arisa-rose);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+.result-title::after {
+  content: "";
+  display: block;
+  width: 48px;
+  height: 3px;
+  margin: 10px auto 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--arisa-pink), var(--arisa-cream));
+}
+
+.result-text,
+.result-hint {
+  color: var(--arisa-text-sub);
+  font-size: 0.92rem;
+}
+
+.result-next {
+  margin-top: 8px;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.result-next time {
+  color: var(--arisa-rose);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.result-remaining {
+  padding: 4px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--arisa-text-sub);
+  font-size: 0.84rem;
+}
+
+.remaining {
+  color: var(--arisa-text);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.result-hint {
+  margin-top: 6px;
+  font-size: 0.82rem;
+}
+
+/* ---------- 안내 카드 ---------- */
+.card--guide {
+  padding: 20px 20px 18px;
+}
+
+.guide-title {
+  color: var(--arisa-rose);
+  font-size: 0.98rem;
+  font-weight: 800;
+}
+
+.guide-list {
+  display: grid;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 0;
+  color: var(--arisa-text-sub);
+  font-size: 0.86rem;
+  list-style: none;
+}
+
+/* ---------- 푸터 ---------- */
+.site-footer {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding-top: 12px;
+  text-align: center;
+}
+
+.utility {
+  margin-bottom: 10px;
+}
+
+.footer-name {
+  color: var(--arisa-rose);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.footer-line {
+  color: var(--arisa-text-sub);
+  font-size: 0.76rem;
+}
+
+/* ---------- 화면 크기 ---------- */
+@media (max-width: 360px) {
+  .card { padding-left: 16px; padding-right: 16px; }
+  .paper-input { padding-left: 14px; padding-right: 14px; }
+}
+
+@media (min-width: 768px) {
+  .page { padding: 20px 28px 28px; }
+  .card { padding-left: 28px; padding-right: 28px; }
+}

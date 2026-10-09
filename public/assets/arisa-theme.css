@@ -1,0 +1,582 @@
+/* =========================================================
+   ARISA · LAST LIVE — arisa-theme.css
+   아리사 전용 핑크 테마. 색은 모두 이 파일의 변수로만 정의합니다.
+   (다른 서비스의 CSS 변수나 파일을 참조하지 않습니다)
+   구성: 1) 색상 토큰  2) 기본 규칙  3) 배경  4) 떠다니는 이모지  5) 공통 부품  6) 움직임 줄이기
+   ========================================================= */
+
+/* ---------- 1) 색상 토큰 ---------- */
+.arisa-theme {
+  --arisa-bg-1: #FFF4F7;
+  --arisa-bg-2: #F5C9D9;
+  --arisa-bg-3: #E9A9C4;
+
+  --arisa-pink-light: #FBE0EA;
+  --arisa-pink: #D979A0;
+  --arisa-rose: #AD3E6C;
+  --arisa-rose-dark: #873253;
+
+  --arisa-text: #4E303D;
+  --arisa-text-sub: #775763;
+
+  --arisa-paper: #FFFDF9;
+  --arisa-paper-line: #F4DCE4;
+
+  --arisa-card-bg: rgba(255, 252, 253, 0.82);
+  --arisa-card-border: rgba(255, 255, 255, 0.85);
+
+  --arisa-glow: rgba(255, 119, 173, 0.30);
+  --arisa-shadow: rgba(145, 55, 94, 0.14);
+
+  /* 확장 토큰 */
+  --arisa-danger: #A32653;
+  --arisa-cream: #F7E4CE;
+  --arisa-placeholder: #8C6B78;
+  --arisa-line: rgba(173, 62, 108, 0.24);
+  --arisa-btn: linear-gradient(135deg, #AD3E6C 0%, #AD3E6C 40%, #C9638C 100%);
+
+  --card-shadow: 0 12px 36px var(--arisa-shadow), 0 2px 8px rgba(145, 55, 94, 0.08);
+  --radius-lg: 28px;
+  --radius-md: 18px;
+  --radius-pill: 999px;
+  --paper-line: 30px;
+  --paper-pad-y: 14px;
+
+  --font-emoji: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji";
+  --font-ko: "Pretendard", "Pretendard Variable", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "맑은 고딕",
+    "Hiragino Sans", "Yu Gothic", "Meiryo", system-ui, -apple-system, "Segoe UI", sans-serif, var(--font-emoji);
+  --font-ja: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Yu Gothic", "Meiryo", "Noto Sans JP",
+    "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, -apple-system, "Segoe UI", sans-serif, var(--font-emoji);
+}
+
+/* ---------- 2) 기본 규칙 ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  background: #F5C9D9;
+}
+
+.arisa-theme {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  font-family: var(--font-ko);
+  color: var(--arisa-text);
+  line-height: 1.6;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+html:lang(ja) .arisa-theme {
+  font-family: var(--font-ja);
+  word-break: normal;
+  line-break: strict;
+}
+
+.arisa-theme p,
+.arisa-theme h1,
+.arisa-theme h2,
+.arisa-theme ul {
+  margin: 0;
+}
+
+.arisa-theme button,
+.arisa-theme input,
+.arisa-theme textarea,
+.arisa-theme select {
+  font: inherit;
+  color: inherit;
+}
+
+.arisa-theme :focus-visible {
+  outline: 3px solid var(--arisa-rose);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- 3) 배경: 끝까지 핑크 ----------
+   겹겹의 radial-gradient 만 사용합니다. (이미지·캔버스·blur 없음)
+   - 위쪽의 옅은 핑크빛 광원 / 가운데의 부드러운 크림빛 조명 / 가장자리의 흐릿한 로즈 음영
+   - 아주 천천히 움직이는 반투명 핑크빛 (arisa-stage__drift) */
+.arisa-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 72% 40% at 50% -4%, rgba(255, 213, 229, 0.9), rgba(255, 213, 229, 0) 70%),
+    radial-gradient(ellipse 56% 42% at 50% 38%, rgba(255, 247, 236, 0.66), rgba(255, 247, 236, 0) 72%),
+    radial-gradient(ellipse 90% 34% at 50% 108%, rgba(173, 62, 108, 0.24), rgba(173, 62, 108, 0) 72%),
+    radial-gradient(ellipse 30% 72% at -4% 52%, rgba(173, 62, 108, 0.14), rgba(173, 62, 108, 0) 72%),
+    radial-gradient(ellipse 30% 72% at 104% 52%, rgba(173, 62, 108, 0.14), rgba(173, 62, 108, 0) 72%),
+    linear-gradient(165deg, #FFF4F7 0%, #F5C9D9 52%, #E9A9C4 100%);
+}
+
+.arisa-stage::before {
+  content: "";
+  position: absolute;
+  top: -6%;
+  left: 50%;
+  width: min(820px, 130vw);
+  height: 70%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse 50% 60% at 50% 18%, rgba(255, 236, 244, 0.55), rgba(255, 236, 244, 0) 72%);
+  animation: arisaLightBreathe 16s ease-in-out infinite alternate;
+}
+
+.arisa-stage__drift {
+  position: absolute;
+  inset: -18%;
+  background:
+    radial-gradient(circle at 24% 28%, rgba(255, 119, 173, 0.17), rgba(255, 119, 173, 0) 38%),
+    radial-gradient(circle at 74% 66%, rgba(255, 166, 200, 0.15), rgba(255, 166, 200, 0) 40%);
+  animation: arisaDrift 54s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes arisaLightBreathe {
+  from { opacity: 0.7; }
+  to { opacity: 1; }
+}
+
+@keyframes arisaDrift {
+  from { transform: translate3d(-3%, -2%, 0); }
+  to { transform: translate3d(3%, 3%, 0); }
+}
+
+/* ---------- 4) 배경 이모지: Enchanted Pink → Disenchanted ----------
+   한 개의 이모지는 네 겹으로 나뉩니다. (transform 이 서로 부딪히지 않도록)
+   .ae        바깥: 위치와 느린 이동 (fall / sway / rise / glow)
+   .ae__life  안쪽: 나타남 → 사라짐 (opacity, scale, 채도)
+   .ae__glyph 이모지 글자: 반짝임 (좌우 흔들림, 미세한 회전, 밝기)
+   .ae__halo  핑크빛 후광 (이모지 색을 바꾸는 대신 별도 층으로 표현)
+   --dur 이 같아서 이동·후광·입자가 한 생명주기 안에서 함께 움직입니다. */
+.emoji-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: opacity 0.6s ease;
+}
+
+.emoji-layer.is-dim {
+  opacity: 0.3;
+}
+
+.ae {
+  position: absolute;
+  top: calc(var(--y) * 1%);
+  left: clamp(0px, calc(var(--x) * 1% - var(--size) / 2), calc(100% - var(--size)));
+  width: var(--size);
+  height: var(--size);
+  font-size: var(--size);
+  line-height: 1;
+  animation-duration: var(--dur);
+  animation-delay: var(--delay);
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+.ae.is-fall { animation-name: arisaFall; }
+.ae.is-sway { animation-name: arisaSway; }
+.ae.is-rise { animation-name: arisaRise; }
+.ae.is-glow { animation-name: arisaFloat; }
+
+.ae__life,
+.ae__glyph,
+.ae__halo,
+.ae__p {
+  position: absolute;
+  animation-duration: var(--dur);
+  animation-delay: var(--delay);
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.ae__life {
+  inset: 0;
+  opacity: 0.55; /* 움직임을 끈 상태의 정지 모습 */
+  animation-name: arisaDisenchant;
+}
+
+.ae__halo {
+  left: 50%;
+  top: 50%;
+  width: 2.3em;
+  height: 2.3em;
+  margin: -1.15em 0 0 -1.15em;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 119, 173, 0.46), rgba(255, 119, 173, 0.18) 42%, rgba(255, 119, 173, 0) 70%);
+  opacity: 0.55;
+  animation-name: arisaHalo;
+}
+
+.ae__glyph {
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-emoji), sans-serif;
+  animation-name: arisaShimmer;
+}
+
+/* 반짝이는 작은 별 (CSS 도형) */
+.ae__p {
+  left: 50%;
+  top: 50%;
+  opacity: 0;
+}
+
+.ae__p--star {
+  width: 0.34em;
+  height: 0.34em;
+  background: #fff4f9;
+  box-shadow: 0 0 0.25em rgba(255, 119, 173, 0.8);
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+}
+
+.ae__p--a { margin: -0.95em 0 0 0.5em; animation-name: arisaSparkleA; }
+.ae__p--b { margin: 0.35em 0 0 -0.95em; animation-name: arisaSparkleB; }
+
+/* 흩어지는 작은 입자 (CSS 도형): 하나는 위로, 하나는 아래로 */
+.ae__p--dust {
+  width: 0.2em;
+  height: 0.2em;
+  border-radius: 50%;
+  background: #F6B5CD;
+}
+
+.ae__p--up { margin: -0.1em 0 0 -0.4em; animation-name: arisaDustUp; }
+.ae__p--down { margin: 0.1em 0 0 0.3em; animation-name: arisaDustDown; background: #E9A9C4; }
+
+/* 느린 이동: 위치만 바꿈. 이모지가 보이는 동안(생명주기 전체)에 걸쳐 아주 조금만 움직임 */
+@keyframes arisaFall {
+  0% { transform: translate(0, -18px) rotate(-5deg); }
+  50% { transform: translate(7px, 14px) rotate(3deg); }
+  100% { transform: translate(0, 46px) rotate(-3deg); }
+}
+
+@keyframes arisaSway {
+  0% { transform: translate(-10px, -6px) rotate(-8deg); }
+  50% { transform: translate(4px, 5px) rotate(3deg); }
+  100% { transform: translate(10px, 10px) rotate(8deg); }
+}
+
+@keyframes arisaRise {
+  0% { transform: translate(0, 30px); }
+  50% { transform: translate(-7px, -8px); }
+  100% { transform: translate(0, -44px); }
+}
+
+@keyframes arisaFloat {
+  0% { transform: translate(0, 8px); }
+  50% { transform: translate(5px, -6px); }
+  100% { transform: translate(0, -12px); }
+}
+
+/* 1 Enchant → 2 Shimmer → 3 Disenchant → 4 Dissolve → (사라진 채 잠시 쉬었다가) 5 Reappear */
+@keyframes arisaDisenchant {
+  0% { opacity: 0; filter: saturate(1.2) brightness(1.08); transform: scale(0.85); }
+  16% { opacity: 0.88; filter: saturate(1.2) brightness(1.12); transform: scale(1.05); }
+  42% { opacity: 0.9; filter: saturate(1.05); transform: scale(1); }
+  72% { opacity: 0.48; filter: saturate(0.55) brightness(1); transform: scale(0.94); }
+  92% { opacity: 0.04; filter: saturate(0.1); transform: scale(0.82); }
+  100% { opacity: 0; filter: saturate(0); transform: scale(0.8); }
+}
+
+/* 후광: 나타날 때 켜지고, 반짝일 때 숨 쉬듯 밝아지고, 풀릴 때 줄어듦 */
+@keyframes arisaHalo {
+  0% { opacity: 0; transform: scale(0.6); }
+  16% { opacity: 0.95; transform: scale(1.05); }
+  26% { opacity: 1; transform: scale(1.12); }
+  34% { opacity: 0.8; transform: scale(1); }
+  42% { opacity: 0.95; transform: scale(1.08); }
+  72% { opacity: 0.12; transform: scale(0.86); }
+  100% { opacity: 0; transform: scale(0.7); }
+}
+
+/* 반짝임: 16~42% 사이에만 좌우로 흔들리고 미세하게 회전, 밝기가 오르내림 */
+@keyframes arisaShimmer {
+  0%, 16% { transform: translateX(0) rotate(0deg); filter: brightness(1); }
+  21% { transform: translateX(-2px) rotate(-3deg); filter: brightness(1.14); }
+  27% { transform: translateX(2px) rotate(3deg); filter: brightness(1.04); }
+  33% { transform: translateX(-2px) rotate(-2deg); filter: brightness(1.14); }
+  39% { transform: translateX(1px) rotate(2deg); filter: brightness(1.04); }
+  44%, 100% { transform: translateX(0) rotate(0deg); filter: brightness(1); }
+}
+
+@keyframes arisaSparkleA {
+  0%, 17% { opacity: 0; transform: scale(0.2) rotate(0deg); }
+  22% { opacity: 0.95; transform: scale(1) rotate(25deg); }
+  30% { opacity: 0; transform: scale(0.3) rotate(60deg); }
+  34% { opacity: 0.8; transform: scale(0.8) rotate(80deg); }
+  41%, 100% { opacity: 0; transform: scale(0.2) rotate(110deg); }
+}
+
+@keyframes arisaSparkleB {
+  0%, 22% { opacity: 0; transform: scale(0.2) rotate(0deg); }
+  27% { opacity: 0.9; transform: scale(0.9) rotate(-25deg); }
+  35% { opacity: 0; transform: scale(0.3) rotate(-60deg); }
+  38% { opacity: 0.75; transform: scale(0.7) rotate(-80deg); }
+  44%, 100% { opacity: 0; transform: scale(0.2) rotate(-110deg); }
+}
+
+@keyframes arisaDustUp {
+  0%, 70% { opacity: 0; transform: translate(0, 0) scale(1); }
+  76% { opacity: 0.85; }
+  100% { opacity: 0; transform: translate(-0.5em, -1.7em) scale(0.5); }
+}
+
+@keyframes arisaDustDown {
+  0%, 72% { opacity: 0; transform: translate(0, 0) scale(1); }
+  78% { opacity: 0.8; }
+  100% { opacity: 0; transform: translate(0.6em, 1.8em) scale(0.5); }
+}
+
+/* 탭이 보이지 않을 때는 멈춤 */
+.is-page-hidden .ae,
+.is-page-hidden .ae *,
+.is-page-hidden .arisa-stage::before,
+.is-page-hidden .arisa-stage__drift,
+.is-page-hidden .mini-envelope {
+  animation-play-state: paused;
+}
+
+/* ---------- 5) 공통 부품 ---------- */
+.card {
+  position: relative;
+  padding: 22px 20px;
+  border: 1px solid var(--arisa-card-border);
+  border-radius: var(--radius-lg);
+  background: var(--arisa-card-bg);
+  box-shadow: var(--card-shadow);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 48px;
+  padding: 10px 22px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font-size: 0.96rem;
+  font-weight: 700;
+  line-height: 1.3;
+  text-decoration: none;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.btn--primary {
+  background: var(--arisa-btn);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(173, 62, 108, 0.3);
+}
+
+.btn--primary:hover:not(:disabled) {
+  box-shadow: 0 8px 22px rgba(173, 62, 108, 0.4);
+}
+
+.btn--ghost {
+  background: rgba(255, 255, 255, 0.78);
+  border-color: rgba(173, 62, 108, 0.3);
+  color: var(--arisa-rose);
+}
+
+.btn--ghost:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.btn:disabled {
+  cursor: default;
+  opacity: 0.62;
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn--small {
+  min-height: 38px;
+  padding: 6px 14px;
+  font-size: 0.82rem;
+}
+
+.chip-btn {
+  min-height: 34px;
+  padding: 6px 14px;
+  border: 1px solid var(--arisa-card-border);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--arisa-rose);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px var(--arisa-shadow);
+  transition: background-color 0.2s ease;
+}
+
+.chip-btn:hover {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.chip-btn[aria-pressed="true"],
+.chip-btn[aria-pressed="true"]:hover {
+  background: var(--arisa-rose);
+  border-color: var(--arisa-rose);
+  color: #fff;
+}
+
+.chip-btn--small {
+  min-height: 30px;
+  padding: 4px 12px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--arisa-text-sub);
+}
+
+.eyebrow {
+  align-self: center;
+  padding: 5px 14px;
+  border: 1px solid var(--arisa-card-border);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.58);
+  color: var(--arisa-rose);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+/* 16px 이상이라 iOS 에서 입력할 때 화면이 확대되지 않음 */
+.text-input {
+  width: 100%;
+  min-height: 48px;
+  padding: 11px 16px;
+  border: 1px solid var(--arisa-line);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 16px;
+  line-height: 1.5;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.text-input::placeholder,
+.paper-input::placeholder {
+  color: var(--arisa-placeholder);
+}
+
+.text-input:focus,
+.paper-input:focus {
+  outline: none;
+  border-color: var(--arisa-rose);
+  box-shadow: 0 0 0 3px rgba(173, 62, 108, 0.28);
+}
+
+.text-input[aria-invalid="true"],
+.paper-input[aria-invalid="true"] {
+  border-color: var(--arisa-danger);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.field-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.field-label {
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.field-hint {
+  color: var(--arisa-text-sub);
+  font-size: 0.82rem;
+}
+
+.field-error,
+.form-error {
+  color: var(--arisa-danger);
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.form-error {
+  padding: 10px 14px;
+  border: 1px solid rgba(163, 38, 83, 0.24);
+  border-radius: 14px;
+  background: rgba(255, 244, 248, 0.9);
+}
+
+.noscript-note {
+  position: relative;
+  z-index: 3;
+  margin: 0 auto 20px;
+  max-width: 600px;
+  padding: 0 16px;
+  color: var(--arisa-text-sub);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* ---------- 6) 움직임 줄이기 ----------
+   '움직임 끄기' 또는 기기 설정. '움직임 켜기'를 고르면 .motion-on 이 기기 설정을 덮어씁니다.
+   멈춘 상태에서도 핑크 배경과 정지된 이모지가 그대로 남습니다. */
+.motion-off *,
+.motion-off *::before,
+.motion-off *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+.motion-off .ae__p {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not(.motion-on) *,
+  html:not(.motion-on) *::before,
+  html:not(.motion-on) *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  html:not(.motion-on) .ae__p {
+    display: none;
+  }
+}

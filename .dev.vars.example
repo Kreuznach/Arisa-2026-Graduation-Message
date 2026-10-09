@@ -1,0 +1,22 @@
+# 로컬 개발용 예시입니다. 이 파일을 .dev.vars 로 복사한 뒤 값을 채우세요. (.dev.vars 는 git 에 올리지 않습니다)
+# 운영에서는 Cloudflare Pages → Settings → Variables and Secrets 에 같은 이름으로 넣습니다.
+
+# Supabase 프로젝트 주소 (기존 mokano.live 와 같은 프로젝트)
+SUPABASE_URL=
+# 서버 전용 키 (편지 전용 sb_secret_... 추천, 또는 service_role). 절대 NEXT_PUBLIC_ / VITE_ 공개 변수로 만들지 마세요.
+SUPABASE_SERVICE_ROLE_KEY=
+# 브라우저 식별 쿠키·세션 서명용 무작위 문자열 (32자 이상)
+LETTER_COOKIE_SECRET=
+# 아리사 편지함(/arisa) 접근 코드 (8자 이상, 추측하기 어렵게)
+ARISA_ACCESS_CODE=
+# 관리자(/admin)로 허용할 Supabase Auth 사용자 UID. 여러 명이면 쉼표로 구분
+ARISA_ADMIN_UIDS=
+
+# (선택) 접근 코드를 바꾸지 않고 모든 아리사 세션을 한 번에 끊고 싶을 때 숫자를 올림 (기본 1)
+ARISA_AUTH_VERSION=
+# (선택) 아리사 세션 유지 시간(시간 단위, 기본 24)
+ARISA_SESSION_HOURS=
+# (선택) Supabase 의 anon(공개) 키. 비워 두면 서버 키로 관리자 비밀번호를 확인합니다.
+SUPABASE_ANON_KEY=
+# (선택) 다른 도메인에서 프록시할 때만. 쉼표로 구분한 허용 Origin
+LETTER_ALLOWED_ORIGINS=
