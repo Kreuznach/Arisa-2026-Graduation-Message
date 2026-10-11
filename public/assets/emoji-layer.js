@@ -6,8 +6,8 @@ export const EMOJI_CONFIG = Object.freeze({
   counts: Object.freeze({ mobile: 12, desktop: 22 }),
   // 눈물·이별 계열(2차 그룹)은 전체의 약 4분의 1 이하
   disenchantRatio: 0.25,
-  enchant: Object.freeze(['💖', '💗', '💞', '🩷', '💕', '🎀', '🌸', '✨']),
-  disenchant: Object.freeze(['🫧', '🥀', '🥹', '💔']),
+  enchant: Object.freeze(['💖', '💗', '🏰', '🩷', '💕', '🎀', '🌸', '✨']),
+  disenchant: Object.freeze(['🫧', '🥀', '🥹', '🥲']),
   durationSec: Object.freeze([12, 22]),
   seed: 20261009,
 });
