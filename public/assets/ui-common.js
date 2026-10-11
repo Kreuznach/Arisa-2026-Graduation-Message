@@ -18,13 +18,12 @@ export const storage = {
 };
 
 /**
- * '움직임 끄기' 버튼과 기기의 '동작 줄이기' 설정을 하나로 묶습니다.
- * 우선순위: 사용자가 고른 값(켜기/끄기) → 기기 설정
+ * '움직임 켜기/끄기' 버튼의 선택을 관리합니다.
+ * 기본값은 '움직임 켜기'이며, 사용자가 '끄기'를 고른 경우에만 움직임을 멈춥니다. (기기 설정과 무관)
  * @param {{ key: string, button?: HTMLElement | null, labels?: () => { on: string, off: string } }} options
  */
 export function createMotionControl({ key, button = null, labels = null }) {
   const root = document.documentElement;
-  const query = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
   const readPref = () => {
     const saved = storage.get(key);
     return saved === 'on' || saved === 'off' ? saved : null;
@@ -32,7 +31,7 @@ export function createMotionControl({ key, button = null, labels = null }) {
   let pref = readPref();
   let current = { button: null, labels: null };
 
-  const isReduced = () => (pref === 'on' ? false : pref === 'off' ? true : Boolean(query && query.matches));
+  const isReduced = () => pref === 'off';
 
   function apply() {
     const reduced = isReduced();
@@ -55,10 +54,6 @@ export function createMotionControl({ key, button = null, labels = null }) {
     apply();
   }
 
-  if (query) {
-    if (query.addEventListener) query.addEventListener('change', apply);
-    else if (query.addListener) query.addListener(apply);
-  }
   window.addEventListener('storage', (e) => {
     if (e.key === NS + key) {
       pref = readPref();

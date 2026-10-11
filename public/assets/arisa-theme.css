@@ -555,7 +555,7 @@ html:lang(ja) .arisa-theme {
 }
 
 /* ---------- 6) 움직임 줄이기 ----------
-   '움직임 끄기' 또는 기기 설정. '움직임 켜기'를 고르면 .motion-on 이 기기 설정을 덮어씁니다.
+   기본은 움직임 켜기. 사용자가 '움직임 끄기'를 고르면 .motion-off 가 붙어 멈춥니다. (기기 설정과 무관)
    멈춘 상태에서도 핑크 배경과 정지된 이모지가 그대로 남습니다. */
 .motion-off *,
 .motion-off *::before,
@@ -566,17 +566,4 @@ html:lang(ja) .arisa-theme {
 
 .motion-off .ae__p {
   display: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html:not(.motion-on) *,
-  html:not(.motion-on) *::before,
-  html:not(.motion-on) *::after {
-    animation: none !important;
-    transition: none !important;
-  }
-
-  html:not(.motion-on) .ae__p {
-    display: none;
-  }
 }

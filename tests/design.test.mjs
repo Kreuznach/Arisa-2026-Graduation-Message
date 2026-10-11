@@ -161,7 +161,7 @@ test('이모지 CSS: 클릭·선택 불가, 모션 줄이기·비활성 탭 정�
   assert.match(themeCss, /\.emoji-layer \{[^}]*pointer-events: none;[^}]*user-select: none;/);
   assert.match(themeCss, /\.is-page-hidden \.ae,[\s\S]*animation-play-state: paused/);
   assert.match(themeCss, /\.motion-off \*,[\s\S]*animation: none !important/);
-  assert.match(themeCss, /@media \(prefers-reduced-motion: reduce\)[\s\S]*html:not\(\.motion-on\)/);
+  assert.ok(!/prefers-reduced-motion/.test(themeCss)); // 기본값은 움직임 켜기 (기기 설정과 무관)
   assert.match(themeCss, /\.ae__life \{[^}]*opacity: 0\.55;/); // 애니메이션 없이도 보이는 정지 모습
   assert.match(themeCss, /\.emoji-layer\.is-dim \{\s*opacity: 0\.3;/); // 긴 편지를 읽을 때 흐리게
   // 무거운 효과 없음
