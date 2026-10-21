@@ -85,22 +85,30 @@
 .lb-auth-fields { display: grid; gap: 14px; text-align: left; }
 
 .lb-pw { position: relative; }
-.lb-pw .text-input { padding-right: 52px; }
+.lb-pw .text-input { padding-right: 76px; }
 
-.lb-pw-toggle {
+/* .arisa-theme button { font: inherit } 보다 우선하도록 선택자를 .lb-pw 로 한 단계 높임 */
+.lb-pw .lb-pw-toggle {
   position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 40px;
-  height: 40px;
+  top: 50%;
+  right: 6px;
+  transform: translateY(-50%);
+  min-width: 52px;
+  height: 36px;
+  padding: 0 10px;
   border: 0;
-  border-radius: 50%;
+  border-radius: 999px;
   background: transparent;
   color: var(--arisa-rose);
-  font-size: 0.74rem;
+  font-size: 0.8125rem;
   font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  word-break: keep-all;
   cursor: pointer;
 }
+
+.lb-pw .lb-pw-toggle:hover { background: rgba(173, 62, 108, 0.1); }
 
 /* ---------- 요약 숫자 ---------- */
 .lb-counts {
